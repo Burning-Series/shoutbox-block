@@ -59,7 +59,8 @@ function createblockedButton(shoutboxcontainer){
             background.style.position="absolute";
             background.style.height=((blockedusers.length>0?blockedusers.length:1)*20)+20+"px";
             background.style.marginLeft="5px";
-            blockedBtn.append(background);
+            background.style.left="200px";
+            shoutboxcontainer.parentElement.previousElementSibling.appendChild(background);
             a.target.buttoncontent=background;
             for(var i=0;i<blockedusers.length;i++){
                 var userbtn=document.createElement("button");
@@ -82,9 +83,9 @@ function createblockedButton(shoutboxcontainer){
                     var list=L.g("blocked_users",new Array(0));
                     list.remI(list.f(btn.target.user));
                     L.s("blocked_users",list);
-                     a.target.enabled=!a.target.enabled;
+                    a.target.enabled=!a.target.enabled;
+                    a.target.buttoncontent.remove();
                     a.target.remove();
-                    //a.target.buttoncontent.remove();
                     createblockedButton(shoutboxcontainer);
                 };
                 background.appendChild(removebtn);
