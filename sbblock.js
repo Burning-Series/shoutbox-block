@@ -106,7 +106,27 @@ function createblockedButton(shoutboxcontainer){
     };
     shoutboxcontainer.parentElement.previousElementSibling.appendChild(blockedBtn);
 }
+function addButton(user){
+    var blockBtn=document.createElement("button");
+    blockBtn.innerText="block";
+    blockBtn.style.position="sticky";
+    debugger;
+    blockBtn.style.left= "92%";
+    blockBtn.onclick=function(a,b){
+        var userBlocking=a.target.parentElement.children[0].innerText;
+        L.p("blocked_users",userBlocking,new Array(0));
+        for(var i=shoutboxcontainer.children.length-2;i>-1;i-=2){
+            if(shoutboxcontainer.children[i].children[0].innerText===userBlocking){
+                shoutboxcontainer.children[i+1].remove();
+                shoutboxcontainer.children[i].remove();
+            }
+        }
+    };
+    debugger;
+    user.appendChild(blockBtn);
+    // user.insertBefore(,user.children[1]);
 
+}
 
 (function() {
     'use strict';
@@ -152,31 +172,16 @@ function createblockedButton(shoutboxcontainer){
     if(shoutboxcontainer){
         createblockedButton(shoutboxcontainer);
 
-        var blockedUsers=L.g("blocked_users",new Array(0));
+        var blockedUsersB=L.g("blocked_users",new Array(0));
         for(var i=shoutboxcontainer.children.length-2;i>-1;i-=2){
             var user=shoutboxcontainer.children[i];
-
-            if(blockedUsers.f(user.children[0].innerText)>-1){
+            if(blockedUsersB.f(user.children[0].innerText)>-1){
                 shoutboxcontainer.children[i+1].remove();
                 shoutboxcontainer.children[i].remove();
             }else{
-                var blockBtn=document.createElement("button");
-                blockBtn.innerText="block";
-                blockBtn.onclick=function(a,b){
-                    var userBlocking=a.target.parentElement.children[0].innerText;
-                    L.p("blocked_users",userBlocking,new Array(0));
-                    for(var i=shoutboxcontainer.children.length-2;i>-1;i-=2){
-                        if(shoutboxcontainer.children[i].children[0].innerText===userBlocking){
-                            shoutboxcontainer.children[i+1].remove();
-                            shoutboxcontainer.children[i].remove();
-                        }
-                    }
-                };
-                user.insertBefore(blockBtn,user.children[1]);
+                addButton(user);
             }
         }
-
-
         shoutboxcontainer.addEventListener("DOMNodeInserted",function(a,b){
             if(a.target.localName==="dd"){
                 var blockedUsers=L.g("blocked_users",new Array(0));
@@ -186,19 +191,7 @@ function createblockedButton(shoutboxcontainer){
                     message.remove();
                     user.remove();
                 }else{
-                    var blockBtn=document.createElement("button");
-                    blockBtn.innerText="block";
-                    blockBtn.onclick=function(a,b){
-                        var userBlocking=a.target.parentElement.children[0].innerText;
-                        L.p("blocked_users",userBlocking,new Array(0));
-                        for(var i=shoutboxcontainer.children.length-2;i>-1;i-=2){
-                            if(shoutboxcontainer.children[i].children[0].innerText===userBlocking){
-                                shoutboxcontainer.children[i+1].remove();
-                                shoutboxcontainer.children[i].remove();
-                            }
-                        }
-                    };
-                    user.insertBefore(blockBtn,user.children[1]);
+                    addButton(user);
                 }
             }
         });
