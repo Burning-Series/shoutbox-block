@@ -82,7 +82,7 @@ function createblockedButton(shoutboxcontainer){
                     var list=L.g("blocked_users",new Array(0));
                     list.remI(list.f(btn.target.user));
                     L.s("blocked_users",list);
-                    // a.target.enabled=!a.target.enabled;
+                     a.target.enabled=!a.target.enabled;
                     a.target.remove();
                     //a.target.buttoncontent.remove();
                     createblockedButton(shoutboxcontainer);
