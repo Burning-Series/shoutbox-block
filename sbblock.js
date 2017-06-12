@@ -106,23 +106,25 @@ function createblockedButton(shoutboxcontainer){
     };
     shoutboxcontainer.parentElement.previousElementSibling.appendChild(blockedBtn);
 }
-function addButton(user){
+function addButton(user,shoutboxcontainer){
     var blockBtn=document.createElement("button");
     blockBtn.innerText="block";
     blockBtn.style.position="sticky";
-    debugger;
     blockBtn.style.left= "92%";
     blockBtn.onclick=function(a,b){
         var userBlocking=a.target.parentElement.children[0].innerText;
-        L.p("blocked_users",userBlocking,new Array(0));
-        for(var i=shoutboxcontainer.children.length-2;i>-1;i-=2){
-            if(shoutboxcontainer.children[i].children[0].innerText===userBlocking){
-                shoutboxcontainer.children[i+1].remove();
-                shoutboxcontainer.children[i].remove();
+        if(L.g("blocked_users",new Array(0)).f(userBlocking)===-1){
+            L.p("blocked_users",userBlocking,new Array(0));
+            for(var i=shoutboxcontainer.children.length-2;i>-1;i-=2){
+                if(shoutboxcontainer.children[i].children[0].innerText===userBlocking){
+                    shoutboxcontainer.children[i+1].remove();
+                    shoutboxcontainer.children[i].remove();
+                }
             }
         }
+
+
     };
-    debugger;
     user.appendChild(blockBtn);
     // user.insertBefore(,user.children[1]);
 
@@ -179,7 +181,7 @@ function addButton(user){
                 shoutboxcontainer.children[i+1].remove();
                 shoutboxcontainer.children[i].remove();
             }else{
-                addButton(user);
+                addButton(user,shoutboxcontainer);
             }
         }
         shoutboxcontainer.addEventListener("DOMNodeInserted",function(a,b){
@@ -191,7 +193,7 @@ function addButton(user){
                     message.remove();
                     user.remove();
                 }else{
-                    addButton(user);
+                    addButton(user,shoutboxcontainer);
                 }
             }
         });
